@@ -44,7 +44,7 @@ func prepareDB(session *mgo.Session, db, dbcollection string) (*mgo.Collection, 
 	return session.DB(db).C(dbcollection), nil
 }
 
-func NewSession(username, password string) error {
+func NewSession() error {
 	session, err := mgo.Dial("capi:ipac@mongodb/comunicode")
 
 	if err != nil {
