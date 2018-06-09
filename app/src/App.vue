@@ -1,6 +1,16 @@
 <template>
-  <router-view />
+  <layout-container>
+    <router-view />
+  </layout-container>
 </template>
+
+<script>
+  import LayoutContainer from '@/components/Layout/LayoutContainer';
+
+  export default {
+    components: { LayoutContainer },
+  };
+</script>
 
 <style lang="stylus">
   @import url('https://fonts.googleapis.com/css?family=Anaheim|Barlow:300,400')

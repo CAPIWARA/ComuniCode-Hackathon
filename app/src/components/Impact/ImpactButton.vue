@@ -36,8 +36,6 @@
 <style lang="stylus">
   @import '~@/assets/styles/theme'
 
-  ImpactButton-color = #3A3A3A
-
   .ImpactButton
     display: flex
     align-items: center
@@ -45,7 +43,7 @@
     height: 48px
     padding-left: 12px
     padding-right @padding-left
-    border: 2px solid ImpactButton-color
+    border: 2px solid $color-primary
     outline: none
     cursor: pointer
     transition: background-color .2s ease-in
@@ -56,7 +54,7 @@
       text-align: center
       text-transform: uppercase
       letter-spacing: 1px
-      color: ImpactButton-color
+      color: $color-primary
       transition: color .1s ease-in
 
     &.-is-button
@@ -67,9 +65,8 @@
       text-decoration: none
 
     &:hover
-      background-color: ImpactButton-color
+      background-color: $color-primary
 
       > .text
         color: #FFFFFF
 </style>
-
