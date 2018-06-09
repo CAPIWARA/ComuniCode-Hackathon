@@ -45,7 +45,8 @@ func prepareDB(session *mgo.Session, db, dbcollection string) (*mgo.Collection, 
 }
 
 func NewSession() error {
-	session, err := mgo.Dial("capi:ipac@mongodb/comunicode")
+	//remote is only for test
+	session, err := mgo.Dial("mongodb://cardosomarcos:cardosomarcos10@ds153890.mlab.com:53890/comunicode")
 
 	if err != nil {
 		log.Printf("db error: %v", err)

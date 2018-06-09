@@ -11,13 +11,18 @@ import (
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql"
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/users"
+	"github.com/codegangsta/martini"
 
 	"github.com/gorilla/mux"
 	gqlhandler "github.com/graphql-go/graphql-go-handler"
 )
 
-//eval "$(docker-machine env default)"
+//
 func main() {
+	//workaround: mongo is setting after go build
+	m := martini.Classic()
+	m.Use(runnerMiddleware)
+
 	router := mux.NewRouter()
 
 	if err := db.NewSession(); err != nil {

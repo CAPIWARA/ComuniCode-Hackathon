@@ -1,7 +1,4 @@
 version: '3'
-networks:
-  app-tier:
-    driver: bridge
 services:
   server:
     build: 
@@ -11,22 +8,7 @@ services:
     command: fresh
     volumes:    
       - ./server:/go/src/server
-    networks:
-      - app-tier
-    links: 
-      - mongodb
-  mongodb:
-    build: ./db
-    volumes:
-      - ./db/mongodb:/var/lib/mongodb
-    ports:
-      - "27017:27017"
-    environment:
-      - MONGODB_USERNAME=${MONGODB_USERNAME}
-      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
-      - MONGODB_DATABASE=${MONGODB_DATABASE}
-    networks:
-      - app-tier
+    
 
 
     
