@@ -1,6 +1,7 @@
 version: '3'
+
 services:
-  app:
+  server:
     build: 
       context: ./server
     ports:
@@ -10,6 +11,8 @@ services:
       - ./server:/go/src/server
     networks:
       - app-tier
+    links: 
+      - mongodb
   mongodb:
     build: ./db
     volumes:
@@ -24,6 +27,7 @@ services:
       - app-tier
 networks:
   app-tier:
+    driver: bridge
 
 
     
