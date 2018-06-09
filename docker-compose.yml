@@ -1,5 +1,7 @@
 version: '3'
-
+networks:
+  app-tier:
+    driver: bridge
 services:
   server:
     build: 
@@ -25,9 +27,6 @@ services:
       - MONGODB_DATABASE=${MONGODB_DATABASE}
     networks:
       - app-tier
-networks:
-  app-tier:
-    driver: bridge
 
 
     

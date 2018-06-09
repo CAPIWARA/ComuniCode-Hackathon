@@ -20,7 +20,7 @@ import (
 func main() {
 	router := mux.NewRouter()
 
-	if err := db.NewSession("", ""); err != nil {
+	if err := db.NewSession(); err != nil {
 		return
 	}
 	runtime.GOMAXPROCS(runtime.NumCPU() - 1)
