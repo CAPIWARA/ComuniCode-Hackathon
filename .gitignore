@@ -1,2 +1,4 @@
 # Configurações do Finder (Mac).
 .DS_Store
+.vscode
+.vscode/

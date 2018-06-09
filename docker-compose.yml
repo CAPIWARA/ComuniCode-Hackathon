@@ -1,0 +1,29 @@
+version: '3'
+services:
+  app:
+    build: 
+      context: ./server
+    ports:
+      - "3000:8080"
+    command: fresh
+    volumes:    
+      - ./server:/go/src/server
+    networks:
+      - app-tier
+  mongodb:
+    build: ./db
+    volumes:
+      - ./db/mongodb:/var/lib/mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+    networks:
+      - app-tier
+networks:
+  app-tier:
+
+
+    
