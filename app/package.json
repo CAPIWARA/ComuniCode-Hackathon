@@ -1,0 +1,25 @@
+{
+  "name": "ComuniCode-Hackathon",
+  "private": true,
+  "version": "0.0.0",
+  "author": {
+    "url": "https://vitorluizc.github.io/",
+    "name": "Vitor Luiz Cavalcanti",
+    "email": "vitorluizc@outlook.com"
+  },
+  "license": "MIT",
+  "description": "Front-End application.",
+  "main": "src/index.js",
+  "repository": "https://github.com/VitorLuizC/ComuniCode-Hackathon",
+  "scripts": {
+    "start": "poi src/index.js",
+    "build": "poi build src/index.js"
+  },
+  "devDependencies": {
+    "poi": "^10.2.7",
+    "vue-template-compiler": "^2.5.16"
+  },
+  "dependencies": {
+    "vue": "^2.5.16"
+  }
+}

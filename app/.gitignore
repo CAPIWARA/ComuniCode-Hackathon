@@ -1,0 +1,18 @@
+# Pacotes do Node.js.
+node_modules/
+
+# Lista de pacotes e versões do NPM.
+# O Yarn já conta com essa funcionalidade e o estamos usando ao invés do NPM.
+package-lock.json
+
+# Arquivos de log.
+*.log
+*.log.*
+
+# Variáveis de ambiente.
+.env
+.env.*
+!.env.default
+
+# Arquivos de distribuição.
+dist/
