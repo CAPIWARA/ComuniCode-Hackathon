@@ -20,15 +20,16 @@
       :error="errors.first('senha')"
     />
 
-    <button type="submit">Entrar</button>
+    <impact-button>Entrar</impact-button>
   </form>
 </template>
 
 <script>
   import FormEntry from '@/components/Form/FormEntry';
+  import ImpactButton from '@/components/Impact/ImpactButton';
 
   export default {
-    components: { FormEntry },
+    components: { FormEntry, ImpactButton },
     data () {
       return {
         email: '',
