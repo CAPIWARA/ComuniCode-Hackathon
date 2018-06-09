@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"runtime"
 
-	"github.com/comunicode-hachathon/server/db"
-	"github.com/comunicode-hachathon/server/gql"
-	"github.com/comunicode-hachathon/server/users"
+	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
+	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql"
+	"github.com/VitorLuizC/ComuniCode-Hackathon/server/users"
 
 	"github.com/gorilla/mux"
 	gqlhandler "github.com/graphql-go/graphql-go-handler"

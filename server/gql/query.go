@@ -1,7 +1,7 @@
 package gql
 
 import (
-	"capiwara-boilerplate/gql/fields"
+	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql/fields"
 
 	"github.com/graphql-go/graphql"
 )

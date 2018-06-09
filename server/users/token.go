@@ -1,9 +1,9 @@
 package users
 
 import (
-	"comunicode-hachathon/server/db"
 	"time"
 
+	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
 	"github.com/mitchellh/mapstructure"
 )
 

@@ -1,8 +1,9 @@
 package fields
 
 import (
-	"capiwara-boilerplate/gql/resolvers"
-	"capiwara-boilerplate/gql/types"
+	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql/resolvers"
+
+	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql/types"
 
 	"github.com/graphql-go/graphql"
 )
