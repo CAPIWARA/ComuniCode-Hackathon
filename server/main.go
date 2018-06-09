@@ -62,10 +62,12 @@ func requireAuth(next http.Handler) http.Handler {
 		res, err := users.Decode(token)
 		if err != nil {
 			log.Printf("Permission denied: %v", err)
-			return w.WriteHeader(http.StatusForbidden)
+			w.WriteHeader(http.StatusForbidden)
+			return
 		}
 		if res.Id == "" {
-			return w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 		ctx := context.WithValue(r.Context(), "id", res.Id)
 		next.ServeHTTP(w, r.WithContext(ctx))
