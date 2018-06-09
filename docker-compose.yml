@@ -2,33 +2,14 @@ version: '3'
 networks:
   app-tier:
 services:
-  mongodb:
-    build: ./db
-    volumes:
-      - ./db/mongodb:/var/lib/mongodb
-    ports:
-      - "27017:27017"
-      - "27018:27017"
-    networks:
-      - app-tier
-    environment: 
-      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
-      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
   server:
     build: 
       context: ./server
     ports:
       - "3000:8080"
-    depends_on: 
-      - "mongodb"
     command: fresh
     volumes:    
       - ./server:/go/src/server
-    networks:
-      - app-tier
-    links: 
-      - mongodb
     
 
 
