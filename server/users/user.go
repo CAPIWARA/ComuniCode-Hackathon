@@ -1,59 +1,33 @@
 package users
 
 import (
-	"log"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
+	"github.com/mitchellh/mapstructure"
 )
 
-type Login struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+var UserCollection = db.RepositoryDefMap{
+	"name":    "users",
+	"hashKey": "_id",
 }
 
-type jwtCustomClaims struct {
-	Id string
-	jwt.StandardClaims
+type User struct {
+	Id       string    `json:"-" bson:"_id"`
+	Name     string    `json:"name"`
+	Email    string    `json:"email"`
+	UpdateAt time.Time `json:"updateAt"`
 }
 
-var exp = time.Now().Add(time.Hour * time.Duration(72)).Unix()
-var iss = "capiwara"
-var secretKey = "secretkey"
-
-func Encode(uuid string) (string, error) {
-	claims := &jwtCustomClaims{
-		uuid,
-		jwt.StandardClaims{
-			ExpiresAt: exp,
-			Issuer:    iss,
-			IssuedAt:  time.Now().Unix(),
-		},
-	}
-
-	jwt := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	token, err := jwt.SignedString(secretKey)
+func GetUser(id string) (*User, error) {
+	var user *User
+	res, err := db.MongoRepoBuilder(UserCollection).FindOne(id)
 
 	if err != nil {
-		return "", err
-	}
-	return token, nil
-}
-
-func Decode(tokenString string) (*jwtCustomClaims, error) {
-	log.Println("Decoding token: ", tokenString)
-	token, err := jwt.ParseWithClaims(tokenString, &jwtCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return secretKey, nil
-	})
-	if claims, ok := token.Claims.(*jwtCustomClaims); ok && token.Valid {
-		return claims, nil
-	} else {
-		log.Printf("problem to decode jwt: %v", err)
 		return nil, err
 	}
-}
-
-func (login *Login) Auth() (string, error) {
-	return "", nil
+	if err = mapstructure.Decode(res, &user); err != nil {
+		return nil, err
+	}
+	return user, nil
 }
