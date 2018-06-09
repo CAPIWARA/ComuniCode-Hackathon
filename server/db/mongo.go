@@ -3,6 +3,7 @@ package db
 import (
 	"errors"
 	"log"
+	"time"
 
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -45,7 +46,13 @@ func prepareDB(session *mgo.Session, db, dbcollection string) (*mgo.Collection, 
 }
 
 func NewSession() error {
-	session, err := mgo.Dial("capi:ipac@mongodb/comunicode")
+	session, err := mgo.DialWithInfo(&mgo.DialInfo{
+		Addrs:    []string{"localhost"},
+		Username: "",
+		Password: "",
+		Database: Database,
+		Timeout:  10 * time.Second,
+	})
 
 	if err != nil {
 		log.Printf("db error: %v", err)

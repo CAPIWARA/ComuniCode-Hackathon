@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"runtime"
+	"time"
 
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql"
@@ -16,8 +17,10 @@ import (
 	gqlhandler "github.com/graphql-go/graphql-go-handler"
 )
 
-//eval "$(docker-machine env default)"
+//
 func main() {
+	//workaround: mongo is setting after go build
+	time.Sleep(time.Second * 10)
 	router := mux.NewRouter()
 
 	if err := db.NewSession(); err != nil {
