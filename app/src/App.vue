@@ -3,6 +3,9 @@
 </template>
 
 <style lang="stylus">
+  @import url('https://fonts.googleapis.com/css?family=Anaheim|Barlow:300,400')
+  @import '~@/assets/styles/theme'
+
   *
     box-sizing: border-box
     margin: 0
@@ -12,6 +15,5 @@
     font-size: 62.5%
 
   body
-    font-size: 1.8rem
+    {$typography-base}
 </style>
-

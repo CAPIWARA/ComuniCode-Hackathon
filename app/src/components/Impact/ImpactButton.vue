@@ -34,6 +34,8 @@
 </script>
 
 <style lang="stylus">
+  @import '~@/assets/styles/theme'
+
   ImpactButton-color = #3A3A3A
 
   .ImpactButton
@@ -49,6 +51,8 @@
     transition: background-color .2s ease-in
 
     > .text
+      {$typography-title}
+      font-size: 1.6rem
       text-align: center
       text-transform: uppercase
       letter-spacing: 1px
