@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["*"],
+      "@/": ["index.js"]
+    }
+  },
+  "files": [
+    "**/*",
+    "**/*.js"
+  ]
+}
