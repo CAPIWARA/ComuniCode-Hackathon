@@ -1,13 +1,12 @@
 version: '3'
 services:
   server:
-    build: 
-      context: ./server
-    ports:
+    build: ./server
+    ports: 
       - "3000:8080"
     command: fresh
     volumes:    
-      - ./server:/go/src/server
+      - .:/go/src/comunicode/server
     
 
 

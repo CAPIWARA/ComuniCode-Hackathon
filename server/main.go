@@ -11,18 +11,14 @@ import (
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql"
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/users"
-	"github.com/codegangsta/martini"
 
 	"github.com/gorilla/mux"
 	gqlhandler "github.com/graphql-go/graphql-go-handler"
 )
 
-//
+//eval "$(docker-machine env default)"
 func main() {
 	//workaround: mongo is setting after go build
-	m := martini.Classic()
-	m.Use(runnerMiddleware)
-
 	router := mux.NewRouter()
 
 	if err := db.NewSession(); err != nil {
@@ -34,8 +30,9 @@ func main() {
 	})
 	router.HandleFunc("/login", loginAuth)
 	router.Handle("/graphql", requireAuth(handler))
+	log.Println("Nice, its running")
 	log.Println("Server started at http://localhost:8080/graphql")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
 func loginAuth(w http.ResponseWriter, r *http.Request) {
