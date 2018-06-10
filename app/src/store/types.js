@@ -10,3 +10,8 @@ export const AUTH_LOGOUT = 'authentication/AUTH_LOGOUT';
  * Tipos relacionados a store do usuário.
  */
 export const USER = 'user/USER';
+
+/**
+ * Tipos relacionados a store de checkout.
+ */
+export const CHECKOUT = 'checkout/CHECKOUT';

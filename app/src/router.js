@@ -11,13 +11,13 @@ Vue.use(Router);
 
 const redirectNonAuthenticatedUsers = (_, __, next) => {
   if (!store.getters[AUTH])
-    return next('/');
+    return next('/sign-in');
   return next();
 };
 
 const redirectNonGuestUsers = (_, __, next) => {
   if (!!store.getters[AUTH])
-    return next('/');
+    return next('/help');
   return next();
 };
 
@@ -50,6 +50,12 @@ const router = new Router({
       path: '/help',
       name: 'Help',
       component: () => import('@/screens/Help')
+    },
+    {
+      path: '/checkout',
+      name: 'Checkout',
+      component: () => import('@/screens/Checkout'),
+      beforeEnter: redirectNonAuthenticatedUsers,
     },
   ]
 });

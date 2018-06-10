@@ -19,11 +19,11 @@
       error: ''
     }),
     methods: {
-      async login () {
+      async login (params) {
         try {
-          await this.$store.dispatch(AUTH_LOGIN);
+          await this.$store.dispatch(AUTH_LOGIN, params);
           this.error = '';
-          this.$router.push('/');
+          this.$router.push('/help');
         } catch (error) {
           console.dir(error);
           this.error = 'Erro ao se autenticar. E-Mail e senha de usuário podem não coincidir';

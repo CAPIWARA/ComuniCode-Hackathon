@@ -22,7 +22,7 @@ const actions = {
     if (!token)
       return
 
-    const { data: user } = await requestGraphQL(`
+    const data = await requestGraphQL(`
       query {
         user {
           name
@@ -31,7 +31,7 @@ const actions = {
       }
     `);
 
-    commit(types.USER, user);
+    commit(types.USER, data.data.user);
   }
 };
 
