@@ -71,6 +71,7 @@ func loginAuth(w http.ResponseWriter, r *http.Request) {
 	token, err := login.Auth()
 	if err == nil {
 		w.Header().Set("Authorization", token)
+		w.WriteHeader(http.StatusOK)
 	}
 }
 
