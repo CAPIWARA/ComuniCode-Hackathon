@@ -1,6 +1,7 @@
 package users
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
@@ -35,5 +36,7 @@ func GetUser(id string) (*User, error) {
 
 func (user *User) Save() error {
 	res, err := db.MongoRepoBuilder(UserCollection).FindByQuery("email", user.Email)
+	fmt.Printf("res %v", res)
+	fmt.Printf("err %v", err)
 	return nil
 }
