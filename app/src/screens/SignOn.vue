@@ -17,20 +17,26 @@
 
 <style lang="stylus">
   .SignOnScreen
-    height: calc(100vh - 98px)
     display: flex
-
-    > .form
-    > .aside
-      width: 50%
-      height: 100%
+    flex-direction: column
 
     > .aside
       height: 100%
+      min-height: 460px
       background-size: cover
       background-image: url('~@/assets/images/SignOn-Aside.png')
-      background-position: 0 10%
+      background-position: center
 
       > .image        // background-image da suporte as estratégias de
         display: none // posicionamento e o <img /> nesse caso só serve pra SEO
+
+  @media screen and (min-width: 900px)
+    .SignOnScreen
+      height: calc(100vh - 98px)
+      flex-direction: row
+
+      > .form
+      > .aside
+        width: 50%
+        height: 100%
 </style>
