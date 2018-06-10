@@ -1,6 +1,8 @@
 package users
 
 import (
+	"errors"
+	"fmt"
 	"log"
 	"time"
 
@@ -34,6 +36,22 @@ func GetUser(id string) (*User, error) {
 		return nil, err
 	}
 	return user, nil
+}
+
+func FindByEmail(email string) (*User, error) {
+	var data *User
+	res, err := db.MongoRepoBuilder(UserCollection).FindByQuery("email", email)
+	if err != nil {
+		return nil, err
+	}
+	if res == nil {
+		return nil, errors.New("user not found")
+	}
+	fmt.Printf("res: ", res)
+	if err := mapstructure.Decode(res, &data); err != nil {
+		return nil, err
+	}
+	return data, nil
 }
 
 func (user *User) Save() error {
