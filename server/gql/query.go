@@ -1,8 +1,7 @@
 package gql
 
 import (
-	"comunicode/server/gql/fields"
-
+	"github.com/VitorLuizC/ComuniCode-Hackathon/server/fields"
 	"github.com/graphql-go/graphql"
 )
 
