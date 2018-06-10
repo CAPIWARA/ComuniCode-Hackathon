@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -25,6 +26,7 @@ func main() {
 	handler := gqlhandler.New(&gqlhandler.Config{
 		Schema: &gql.Schema,
 	})
+	router.HandleFunc("/signup", signUp).Methods("POST")
 	router.HandleFunc("/login", loginAuth)
 	router.Handle("/graphql", requireAuth(handler))
 	log.Println("Server started at http://localhost:3000/graphql")
@@ -36,7 +38,6 @@ func requireAuth(next http.Handler) http.Handler {
 		token := r.Header.Get("Authorization")
 		res, err := users.Decode(token)
 		if err != nil {
-			//TODO return forbidden
 			log.Printf("Permission denied: %v", err)
 			w.WriteHeader(http.StatusForbidden)
 			return
@@ -72,4 +73,16 @@ func loginAuth(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		w.Header().Set("Authorization", token)
 	}
+}
+
+func signUp(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var user users.User
+	err := decoder.Decode(&user)
+	if err != nil {
+		w.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+	defer r.Body.Close()
+	user.
 }

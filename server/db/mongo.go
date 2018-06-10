@@ -15,7 +15,7 @@ type MongoCollection struct {
 	*mgo.Collection
 }
 
-func (conn *MongoCollection) FindOne(id string) (interface{}, error) {
+func (conn *MongoCollection) FindById(id string) (interface{}, error) {
 	var data map[string]interface{}
 
 	if err := conn.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&data); err != nil {
@@ -24,6 +24,21 @@ func (conn *MongoCollection) FindOne(id string) (interface{}, error) {
 
 	data["id"] = data["_id"].(bson.ObjectId).Hex()
 	return data, nil
+}
+
+func (conn *MongoCollection) FindByQuery(query string, value string) (interface{}, error) {
+	var data map[string]interface{}
+
+	if err := conn.Find(bson.M{query: value}).One(&data); err != nil {
+		return nil, err
+	}
+
+	data["id"] = data["_id"].(bson.ObjectId).Hex()
+	return data, nil
+}
+
+func (conn *MongoCollection) Save() {
+
 }
 
 func MongoRepoBuilder(repoDefinition RepositoryDef) Repository {

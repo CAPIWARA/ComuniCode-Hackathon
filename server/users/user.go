@@ -22,7 +22,7 @@ type User struct {
 
 func GetUser(id string) (*User, error) {
 	var user *User
-	res, err := db.MongoRepoBuilder(UserCollection).FindOne(id)
+	res, err := db.MongoRepoBuilder(UserCollection).FindById(id)
 
 	if err != nil {
 		return nil, err
@@ -31,4 +31,9 @@ func GetUser(id string) (*User, error) {
 		return nil, err
 	}
 	return user, nil
+}
+
+func (user *User) Save() error {
+	res, err := db.MongoRepoBuilder(UserCollection).FindByQuery("email", user.Email)
+	return nil
 }
