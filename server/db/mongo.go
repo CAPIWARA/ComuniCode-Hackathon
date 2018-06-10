@@ -38,10 +38,31 @@ func (conn *MongoCollection) FindByQuery(query string, value string) (interface{
 }
 
 func (conn *MongoCollection) Save(obj interface{}) error {
-	var data map[string]interface{}
-	if err := conn.Insert(data); err != nil {
+	var result interface{}
+
+	payload, err := InterfaceToMap(obj)
+	if err != nil {
 		return err
 	}
+
+	id := bson.NewObjectId()
+	(*payload)["_id"] = id
+	delete(*payload, "id")
+
+	err = conn.Insert(payload)
+	if err != nil {
+		if mgo.IsDup(err) {
+			return errors.New("record already exists!")
+		}
+		return err
+	}
+
+	(*payload)["id"] = id.Hex()
+	err = MapToInterface(payload, &obj)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
