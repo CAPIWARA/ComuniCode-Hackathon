@@ -2,7 +2,6 @@ package users
 
 import (
 	"errors"
-	"fmt"
 	"log"
 	"time"
 
@@ -47,7 +46,6 @@ func FindByEmail(email string) (*User, error) {
 	if res == nil {
 		return nil, errors.New("user not found")
 	}
-	fmt.Printf("res: ", res)
 	if err := mapstructure.Decode(res, &data); err != nil {
 		return nil, err
 	}
