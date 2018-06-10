@@ -19,7 +19,7 @@ type jwtCustomClaims struct {
 
 var exp = time.Now().Add(time.Hour * time.Duration(72)).Unix()
 var iss = "capiwara"
-var secretKey = "secretkey"
+var secretKey = []byte("secretkey")
 
 func Encode(uuid string) (string, error) {
 	claims := &jwtCustomClaims{
@@ -42,7 +42,6 @@ func Encode(uuid string) (string, error) {
 }
 
 func Decode(tokenString string) (*jwtCustomClaims, error) {
-	log.Println("Decoding token: ", tokenString)
 	token, err := jwt.ParseWithClaims(tokenString, &jwtCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return secretKey, nil
 	})
@@ -56,11 +55,8 @@ func Decode(tokenString string) (*jwtCustomClaims, error) {
 
 func (login *Login) Auth() (string, error) {
 	res, _ := FindByEmail(login.Email)
-	log.Printf("login password: %s", login.Password)
-	log.Printf("res password : %s", res.Password)
 	if res.Password == login.Password {
-		token, err := Encode(res.Id)
-		log.Printf("err: %v", err)
+		token, err := Encode(res.Email)
 		if err != nil {
 			return "", err
 		}

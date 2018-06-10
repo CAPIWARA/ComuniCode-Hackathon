@@ -1,11 +1,10 @@
 package users
 
 import (
+	"comunicode/server/db"
 	"errors"
 	"log"
 	"time"
-
-	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -57,5 +56,9 @@ func (user *User) Save() error {
 	if err := db.MongoRepoBuilder(UserCollection).Save(user); err != nil {
 		return err
 	}
+	return nil
+}
+
+func (user *User) Alter() error {
 	return nil
 }

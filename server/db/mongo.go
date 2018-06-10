@@ -17,10 +17,11 @@ type MongoCollection struct {
 
 func (conn *MongoCollection) FindById(id string) (interface{}, error) {
 	var data map[string]interface{}
-
-	if err := conn.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&data); err != nil {
+	log.Printf("id:%v ", id)
+	if err := conn.Find(bson.M{"id": bson.ObjectIdHex(id)}).One(&data); err != nil {
 		return nil, err
 	}
+	log.Println(data)
 
 	data["id"] = data["_id"].(bson.ObjectId).Hex()
 	return data, nil
@@ -33,8 +34,31 @@ func (conn *MongoCollection) FindByQuery(query string, value string) (interface{
 		return nil, err
 	}
 
-	data["id"] = data["_id"].(bson.ObjectId).Hex()
+	data["id"] = data["_id"].(string)
 	return data, nil
+}
+
+func (conn *MongoCollection) Alter(object interface{}) (interface{}, error) {
+	var result interface{}
+
+	payload, err := InterfaceToMap(object)
+	if err != nil {
+		return nil, err
+	}
+
+	err = conn.Update(bson.M{"email": "comu@code.com"}, bson.M{"$set": payload})
+	if err != nil {
+		if err == mgo.ErrNotFound {
+			return nil, err
+		}
+		if mgo.IsDup(err) {
+			return nil, err
+		}
+
+		return nil, err
+	}
+
+	return result, nil
 }
 
 func (conn *MongoCollection) Save(obj interface{}) error {
@@ -44,7 +68,7 @@ func (conn *MongoCollection) Save(obj interface{}) error {
 	}
 
 	id := bson.NewObjectId()
-	(*payload)["_id"] = id
+	(*payload)["_id"] = id.String()
 	delete(*payload, "id")
 
 	err = conn.Insert(payload)
@@ -89,7 +113,7 @@ func NewSession() error {
 		log.Printf("db error: %v", err)
 		return err
 	}
-	//session.SetMode(mgo.Monotonic, true)
+	session.SetMode(mgo.Monotonic, true)
 	Session = session
 	return nil
 }

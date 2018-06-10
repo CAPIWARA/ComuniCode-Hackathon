@@ -1,6 +1,9 @@
 package main
 
 import (
+	"comunicode/server/db"
+	"comunicode/server/gql"
+	"comunicode/server/users"
 	"context"
 	"encoding/json"
 	"io/ioutil"
@@ -8,9 +11,6 @@ import (
 	"net/http"
 	"runtime"
 
-	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
-	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql"
-	"github.com/VitorLuizC/ComuniCode-Hackathon/server/users"
 	"github.com/gorilla/mux"
 	gqlhandler "github.com/graphql-go/graphql-go-handler"
 )
@@ -34,7 +34,16 @@ func main() {
 
 func requireAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Expose-Headers", "Authorization")
+		if r.Method == "OPTIONS" {
+			log.Println("options method ")
+			return
+		}
 		token := r.Header.Get("Authorization")
+		log.Println("token: ", token)
 		res, err := users.Decode(token)
 		if err != nil {
 			log.Printf("Permission denied: %v", err)
@@ -42,17 +51,24 @@ func requireAuth(next http.Handler) http.Handler {
 			return
 		}
 		if res.Id == "" {
-			//TODO return error
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		ctx := context.WithValue(r.Context(), "id", res.Id)
+		ctx := context.WithValue(r.Context(), "email", res.Id)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
 func loginAuth(w http.ResponseWriter, r *http.Request) {
 	var login users.Login
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Expose-Headers", "Authorization")
+	if r.Method == "OPTIONS" {
+		log.Println("options method ")
+		return
+	}
 	body, err := ioutil.ReadAll(r.Body)
 
 	defer r.Body.Close()
