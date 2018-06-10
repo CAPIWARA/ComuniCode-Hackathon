@@ -2,7 +2,6 @@ package fields
 
 import (
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql/resolvers"
-
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql/types"
 
 	"github.com/graphql-go/graphql"

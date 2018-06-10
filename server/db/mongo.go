@@ -15,7 +15,7 @@ type MongoCollection struct {
 	*mgo.Collection
 }
 
-func (conn *MongoCollection) FindOne(id string) (interface{}, error) {
+func (conn *MongoCollection) FindById(id string) (interface{}, error) {
 	var data map[string]interface{}
 
 	if err := conn.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&data); err != nil {
@@ -24,6 +24,44 @@ func (conn *MongoCollection) FindOne(id string) (interface{}, error) {
 
 	data["id"] = data["_id"].(bson.ObjectId).Hex()
 	return data, nil
+}
+
+func (conn *MongoCollection) FindByQuery(query string, value string) (interface{}, error) {
+	var data map[string]interface{}
+
+	if err := conn.Find(bson.M{query: value}).One(&data); err != nil {
+		return nil, err
+	}
+
+	data["id"] = data["_id"].(bson.ObjectId).Hex()
+	return data, nil
+}
+
+func (conn *MongoCollection) Save(obj interface{}) error {
+	payload, err := InterfaceToMap(obj)
+	if err != nil {
+		return err
+	}
+
+	id := bson.NewObjectId()
+	(*payload)["_id"] = id
+	delete(*payload, "id")
+
+	err = conn.Insert(payload)
+	if err != nil {
+		if mgo.IsDup(err) {
+			return errors.New("record already exists!")
+		}
+		return err
+	}
+
+	(*payload)["id"] = id.Hex()
+	err = MapToInterface(payload, &obj)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func MongoRepoBuilder(repoDefinition RepositoryDef) Repository {
@@ -45,14 +83,13 @@ func prepareDB(session *mgo.Session, db, dbcollection string) (*mgo.Collection, 
 }
 
 func NewSession() error {
-	//remote is only for test
 	session, err := mgo.Dial("mongodb://cardosomarcos:cardosomarcos10@ds153890.mlab.com:53890/comunicode")
 
 	if err != nil {
 		log.Printf("db error: %v", err)
 		return err
 	}
-	session.SetMode(mgo.Monotonic, true)
+	//session.SetMode(mgo.Monotonic, true)
 	Session = session
 	return nil
 }

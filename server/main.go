@@ -11,14 +11,11 @@ import (
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/gql"
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/users"
-
 	"github.com/gorilla/mux"
 	gqlhandler "github.com/graphql-go/graphql-go-handler"
 )
 
-//eval "$(docker-machine env default)"
 func main() {
-	//workaround: mongo is setting after go build
 	router := mux.NewRouter()
 
 	if err := db.NewSession(); err != nil {
@@ -28,11 +25,30 @@ func main() {
 	handler := gqlhandler.New(&gqlhandler.Config{
 		Schema: &gql.Schema,
 	})
+	router.HandleFunc("/signup", signUp).Methods("POST")
 	router.HandleFunc("/login", loginAuth)
 	router.Handle("/graphql", requireAuth(handler))
-	log.Println("Nice, its running")
-	log.Println("Server started at http://localhost:8080/graphql")
+	log.Println("Server started at http://localhost:3000/graphql")
 	log.Fatal(http.ListenAndServe(":8080", router))
+}
+
+func requireAuth(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		token := r.Header.Get("Authorization")
+		res, err := users.Decode(token)
+		if err != nil {
+			log.Printf("Permission denied: %v", err)
+			w.WriteHeader(http.StatusForbidden)
+			return
+		}
+		if res.Id == "" {
+			//TODO return error
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		ctx := context.WithValue(r.Context(), "id", res.Id)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
 func loginAuth(w http.ResponseWriter, r *http.Request) {
@@ -58,20 +74,19 @@ func loginAuth(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func requireAuth(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		token := r.Header.Get("Authorization")
-		res, err := users.Decode(token)
-		if err != nil {
-			log.Printf("Permission denied: %v", err)
-			w.WriteHeader(http.StatusForbidden)
-			return
-		}
-		if res.Id == "" {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		ctx := context.WithValue(r.Context(), "id", res.Id)
-		next.ServeHTTP(w, r.WithContext(ctx))
-	})
+func signUp(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var user users.User
+	err := decoder.Decode(&user)
+	if err != nil {
+		w.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+	defer r.Body.Close()
+	if err := user.Save(); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	return
 }

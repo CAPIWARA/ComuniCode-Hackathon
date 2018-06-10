@@ -6,7 +6,9 @@ type RepositoryDef interface {
 }
 
 type Repository interface {
-	FindOne(id string) (interface{}, error)
+	FindById(id string) (interface{}, error)
+	FindByQuery(query string, value string) (interface{}, error)
+	Save(data interface{}) error
 }
 
 type RepositoryDefMap map[string]interface{}
