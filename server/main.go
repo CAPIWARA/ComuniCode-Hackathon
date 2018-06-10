@@ -84,5 +84,5 @@ func signUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
-	fmt.Println("response: ", user.Save())
+	fmt.Println("response: aaa", user.Save())
 }

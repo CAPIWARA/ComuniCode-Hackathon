@@ -1,6 +1,7 @@
 package users
 
 import (
+	"log"
 	"time"
 
 	"github.com/VitorLuizC/ComuniCode-Hackathon/server/db"
@@ -34,6 +35,7 @@ func GetUser(id string) (*User, error) {
 }
 
 func (user *User) Save() error {
+	log.Printf("save user: %v", user)
 	if err := db.MongoRepoBuilder(UserCollection).Save(user); err != nil {
 		return err
 	}
