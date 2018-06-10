@@ -18,14 +18,25 @@
       to: {
         type: [Object, String],
         default: null
+      },
+      isAlternative: {
+        type: Boolean,
+        default: false
+      },
+      size: {
+        type: String,
+        default: 'md',
+        validator: (size) => [ 'md', 'sm' ].includes(size)
       }
     },
     computed: {
       classes () {
         return [
-          'ImpactButton', {
+          'ImpactButton',
+          '-' + this.size, {
             '-is-link': this.to,
-            '-is-button': !this.to
+            '-is-button': !this.to,
+            '-is-alternative': this.isAlternative
           }
         ]
       }
@@ -40,9 +51,6 @@
     display: flex
     align-items: center
     justify-content: center
-    height: 48px
-    padding-left: 12px
-    padding-right @padding-left
     border: 2px solid $color-primary
     outline: none
     cursor: pointer
@@ -50,11 +58,11 @@
 
     > .text
       {$typography-title}
-      font-size: 1.6rem
       text-align: center
       text-transform: uppercase
       letter-spacing: 1px
       color: $color-primary
+      line-height: 1
       transition: color .1s ease-in
 
     &.-is-button
@@ -64,9 +72,34 @@
     &.-is-link
       text-decoration: none
 
+    &.-is-alternative
+      border-color: #000000
+
+      > .text
+        color: #000000
+
+      &:hover
+        background-color: #000000
+
     &:hover
       background-color: $color-primary
 
       > .text
         color: #FFFFFF
+
+    &.-md
+      height: 48px
+      padding-left: 12px
+      padding-right @padding-left
+
+      > .text
+        font-size: 1.6rem
+
+    &.-sm
+      height: 36px
+      padding-left: 10px
+      padding-right @padding-left
+
+      > .text
+        font-size: 1.4rem
 </style>

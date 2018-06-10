@@ -15,6 +15,11 @@ const router = new Router({
       path: '/sign-in',
       name: 'SignIn',
       component: () => import('@/screens/SignIn')
+    },
+    {
+      path: '/sign-on',
+      name: 'SignOn',
+      component: () => import('@/screens/SignOn')
     }
   ]
 });

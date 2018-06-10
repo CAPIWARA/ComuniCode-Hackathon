@@ -7,7 +7,17 @@
 
       <impact-button
         type="button"
-        class="button"
+        class="subscribe"
+        isAlternative
+        @click="$router.push('/sign-on')"
+      >
+        Seja um doador
+      </impact-button>
+
+      <impact-button
+        type="button"
+        size="sm"
+        class="login"
         @click="$router.push('/sign-in')"
       >
         Entrar
@@ -45,8 +55,11 @@
       margin-left: auto
       margin-right: auto
 
-      > .button
+      > .subscribe
         margin-left: auto
+
+      > .login
+        margin-left: 10px
 
       > .figure
         height: 76px
