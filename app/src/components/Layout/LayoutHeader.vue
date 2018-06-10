@@ -57,6 +57,8 @@
 
       > .subscribe
         margin-left: auto
+        min-width: 90px
+        flex-basis: 90px
 
       > .login
         margin-left: 10px
