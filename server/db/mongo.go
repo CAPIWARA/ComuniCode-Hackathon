@@ -37,8 +37,12 @@ func (conn *MongoCollection) FindByQuery(query string, value string) (interface{
 	return data, nil
 }
 
-func (conn *MongoCollection) Save() {
-
+func (conn *MongoCollection) Save(obj interface{}) error {
+	var data map[string]interface{}
+	if err := conn.Insert(data); err != nil {
+		return err
+	}
+	return nil
 }
 
 func MongoRepoBuilder(repoDefinition RepositoryDef) Repository {
