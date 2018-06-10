@@ -38,8 +38,6 @@ func (conn *MongoCollection) FindByQuery(query string, value string) (interface{
 }
 
 func (conn *MongoCollection) Save(obj interface{}) error {
-	var result interface{}
-
 	payload, err := InterfaceToMap(obj)
 	if err != nil {
 		return err
@@ -91,7 +89,7 @@ func NewSession() error {
 		log.Printf("db error: %v", err)
 		return err
 	}
-	session.SetMode(mgo.Monotonic, true)
+	//session.SetMode(mgo.Monotonic, true)
 	Session = session
 	return nil
 }
