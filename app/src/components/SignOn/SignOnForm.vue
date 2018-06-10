@@ -1,5 +1,5 @@
 <template>
-  <impact-form novalidate @submit.prevent="submit()">
+  <impact-form @submit="submit()">
     <impact-entry
       v-model="name"
       v-validate="'required'"

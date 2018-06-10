@@ -1,5 +1,5 @@
 <template>
-  <form novalidate @submit.prevent="submit()">
+  <impact-form @submit="submit()">
     <impact-entry
       v-model="email"
       v-validate="'required|email'"
@@ -21,20 +21,34 @@
     />
 
     <impact-button>Entrar</impact-button>
-  </form>
+  </impact-form>
 </template>
 
 <script>
+  import ImpactForm from '@/components/Impact/ImpactForm';
   import ImpactEntry from '@/components/Impact/ImpactEntry';
   import ImpactButton from '@/components/Impact/ImpactButton';
 
   export default {
-    components: { ImpactEntry, ImpactButton },
+    components: { ImpactForm, ImpactEntry, ImpactButton },
     data () {
       return {
         email: '',
         password: ''
       };
+    },
+    methods: {
+      async submit () {
+        const isValid = await this.$validator.validateAll();
+
+        if (!isValid)
+          return
+
+        this.$emit('submit', {
+          email: this.email,
+          password: this.password
+        });
+      }
     }
   };
 </script>

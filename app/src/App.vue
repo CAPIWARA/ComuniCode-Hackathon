@@ -5,10 +5,14 @@
 </template>
 
 <script>
+  import { USER } from '@/store/types';
   import LayoutContainer from '@/components/Layout/LayoutContainer';
 
   export default {
     components: { LayoutContainer },
+    mounted () {
+      this.$store.dispatch(USER);
+    }
   };
 </script>
 
