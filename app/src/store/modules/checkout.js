@@ -5,7 +5,9 @@ const actions = {
   [CHECKOUT]: async () => {
     await requestGraphQL(`
       mutation Checkout {
-        checkout (value: 30)
+        checkout (value: "3000") {
+          name
+        }
       }
     `)
   }

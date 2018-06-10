@@ -1,48 +1,56 @@
 <template>
   <section class="CheckoutScreen">
-    <h3>Valor fíxo de R$ 30,00.</h3>
-
     <impact-form class="half-section">
       <impact-entry
-        v-modal="address.street"
+        v-model="address.street"
         label="Logradouro"
+        name="Logradouro"
       />
       <impact-entry
-        v-modal="address.number"
+        v-model="address.number"
         label="Número"
+        name="Número"
       />
       <impact-entry
-        v-modal="address.state"
+        v-model="address.state"
         label="Estado"
+        name="Estado"
       />
       <impact-entry
-        v-modal="address.city"
+        v-model="address.city"
         label="Cidade"
+        name="Cidade"
       />
       <impact-entry
-        v-modal="address.code"
+        v-model="address.code"
         label="CEP"
+        name="CEP"
       />
     </impact-form>
 
     <impact-form class="half-section">
       <impact-entry
-        v-modal="card.number"
+        v-model="card.number"
         label="Número do Cartão"
+        name="Número do Cartão"
       />
       <impact-entry
-        v-modal="card.name"
+        v-model="card.name"
         label="Nome"
+        name="Nome"
       />
       <impact-entry
-        v-modal="card.date"
+        v-model="card.date"
         label="Data de Vencimento"
+        name="Data de Vencimento"
       />
       <impact-entry
-        v-modal="card.code"
+        v-model="card.code"
         label="Código de Segurança"
+        name="Código de Segurança"
       />
     </impact-form>
+
     <impact-form class="full-section">
       <impact-button size="xl" @click="donate()">Confirmar Doação</impact-button>
     </impact-form>
@@ -89,4 +97,5 @@
 
     > .full-section
       width: 100%
+      align-items: center
 </style>
