@@ -1,6 +1,6 @@
 <template>
   <form novalidate @submit.prevent="submit()">
-    <form-entry
+    <impact-entry
       v-model="email"
       v-validate="'required|email'"
       name="e-mail"
@@ -10,7 +10,7 @@
       :error="errors.first('e-mail')"
     />
 
-    <form-entry
+    <impact-entry
       v-model="password"
       v-validate="'required|min:8|max:16'"
       name="senha"
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-  import FormEntry from '@/components/Form/FormEntry';
+  import ImpactEntry from '@/components/Impact/ImpactEntry';
   import ImpactButton from '@/components/Impact/ImpactButton';
 
   export default {
-    components: { FormEntry, ImpactButton },
+    components: { ImpactEntry, ImpactButton },
     data () {
       return {
         email: '',
