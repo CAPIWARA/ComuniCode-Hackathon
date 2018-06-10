@@ -1,27 +1,11 @@
 <template>
   <header class="LayoutHeader">
     <div class="container">
-      <img src="~@/assets/images/Logo.png" class="figure" alt="" />
+      <img src="~@/assets/images/Logo-Wide.png" class="figure" alt="" />
 
       <layout-menu />
 
-      <impact-button
-        type="button"
-        class="subscribe"
-        isAlternative
-        @click="$router.push('/sign-on')"
-      >
-        Seja um doador
-      </impact-button>
-
-      <impact-button
-        type="button"
-        size="sm"
-        class="login"
-        @click="$router.push('/sign-in')"
-      >
-        Entrar
-      </impact-button>
+      <sign-in-pill class="sign-in" />
     </div>
   </header>
 </template>
@@ -29,9 +13,10 @@
 <script>
   import ImpactButton from '@/components/Impact/ImpactButton';
   import LayoutMenu from '@/components/Layout/LayoutMenu';
+  import SignInPill from '@/components/SignIn/SignInPill';
 
   export default {
-    components: { LayoutMenu, ImpactButton }
+    components: { LayoutMenu, ImpactButton, SignInPill },
   };
 </script>
 
@@ -55,13 +40,8 @@
       margin-left: auto
       margin-right: auto
 
-      > .subscribe
+      > .sign-in
         margin-left: auto
-        min-width: 90px
-        flex-basis: 90px
-
-      > .login
-        margin-left: 10px
 
       > .figure
         height: 76px

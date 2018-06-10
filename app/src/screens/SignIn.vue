@@ -4,6 +4,7 @@
     <figure class="aside">
       <img class="image" src="~@/assets/images/SignOn-Aside.png" />
     </figure>
+    <p v-if="error" class="error">{{ error }}</p>
   </section>
 </template>
 
@@ -14,16 +15,33 @@
 
   export default {
     components: { SignInForm },
-    methods: mapActions({
-      login: AUTH_LOGIN
-    })
+    data: () => ({
+      error: ''
+    }),
+    methods: {
+      async login () {
+        try {
+          await this.$store.dispatch(AUTH_LOGIN);
+          this.error = '';
+          this.$router.push('/');
+        } catch (error) {
+          console.dir(error);
+          this.error = 'Erro ao se autenticar. E-Mail e senha de usuário podem não coincidir';
+        }
+      }
+    }
   };
 </script>
 
 <style lang="stylus">
+  @import '~@/assets/styles/theme'
+
   .SignInScreen
     display: flex
     flex-direction: column
+
+    > .error
+      color: $color-error
 
     > .aside
       height: 100%
