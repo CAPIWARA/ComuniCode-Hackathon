@@ -44,7 +44,7 @@ func prepareDB(session *mgo.Session, db, dbcollection string) (*mgo.Collection, 
 	return session.DB(db).C(dbcollection), nil
 }
 
-func NewSession(username, password string) error {
+func NewSession() error {
 	session, err := mgo.Dial("mongodb://cardosomarcos:cardosomarcos10@ds153890.mlab.com:53890/comunicode")
 
 	if err != nil {
