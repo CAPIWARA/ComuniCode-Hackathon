@@ -21,12 +21,7 @@
   import LayoutMenu from '@/components/Layout/LayoutMenu';
 
   export default {
-    components: { LayoutMenu, ImpactButton },
-    data () {
-      return {
-        items
-      };
-    }
+    components: { LayoutMenu, ImpactButton }
   };
 </script>
 
