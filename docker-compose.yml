@@ -1,13 +1,9 @@
 version: '3'
 services:
-  server:
+  web:
     build: ./server
-    ports: 
-      - "3000:8080"
+    ports:
+     - "6060:8080"
     command: fresh
-    volumes:    
-      - .:/go/src/comunicode/server
-    
-
-
-    
+    volumes: 
+     - ./server:/go/src/app
