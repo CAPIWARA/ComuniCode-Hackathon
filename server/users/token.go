@@ -58,5 +58,8 @@ func Decode(tokenString string) (*jwtCustomClaims, error) {
 func (login *Login) Auth() (string, error) {
 	fmt.Printf("login: %v", login)
 	res, err := FindByEmail(login.Email)
+	fmt.Printf("res: %v", res)
+	fmt.Printf("errr: %v", err)
+
 	return "", nil
 }
