@@ -1,7 +1,9 @@
 <template>
-  <section>
-    <layout-header />
-    <slot />
+  <section class="LayoutContainer">
+    <layout-header class="header" />
+    <main class="content">
+      <slot />
+    </main>
   </section>
 </template>
 
@@ -12,3 +14,14 @@
     components: { LayoutHeader },
   };
 </script>
+
+<style lang="stylus">
+  .LayoutContainer
+    > .header
+      position: fixed
+      z-index: 1
+
+    > .content
+      padding-top: 98px
+</style>
+

@@ -26,7 +26,7 @@
       size: {
         type: String,
         default: 'md',
-        validator: (size) => [ 'md', 'sm' ].includes(size)
+        validator: (size) => [ 'xl', 'md', 'sm' ].includes(size)
       }
     },
     computed: {
@@ -86,6 +86,14 @@
 
       > .text
         color: #FFFFFF
+
+    &.-xl
+      height: 150px
+      padding-left: 50px
+      padding-right @padding-left
+
+      > .text
+        font-size: 3rem
 
     &.-md
       height: 48px
