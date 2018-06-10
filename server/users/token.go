@@ -1,6 +1,7 @@
 package users
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -55,5 +56,6 @@ func Decode(tokenString string) (*jwtCustomClaims, error) {
 }
 
 func (login *Login) Auth() (string, error) {
+	fmt.Printf("login: %v", login)
 	return "", nil
 }

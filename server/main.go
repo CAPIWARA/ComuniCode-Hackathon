@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -84,5 +83,10 @@ func signUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
-	fmt.Println("response: aaa", user.Save())
+	if err := user.Save(); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	return
 }
